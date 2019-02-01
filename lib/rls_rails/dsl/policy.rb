@@ -1,5 +1,7 @@
 module RLS
   class Policy
+    include RLS::Util
+
     def initialize table, name
       @tbl = table
       @policy = name
@@ -26,11 +28,11 @@ module RLS
 
       @using = rels.map do |v|
         if v.is_a?(Array)
-          fk = derive_fk v[0]
+          fk = derive_fk @tbl, v[0]
           rel = v[1]
         else
           rel = v
-          fk = derive_fk v
+          fk = derive_fk @tbl, v
         end
 
         rel_tbl = derive_rel_tbl(rel)
@@ -56,8 +58,12 @@ module RLS
       @permissive = false
     end
 
+    def permissive?
+      @permissive
+    end
+
     def restrictive?
-      !@permissive
+      !permissive?
     end
 
     def to name

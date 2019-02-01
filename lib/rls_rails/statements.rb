@@ -1,5 +1,7 @@
 module RLS
   module Statements
+    include RLS::Util
+
     def enable_rls table, force: false
       reversible do |dir|
         dir.up do

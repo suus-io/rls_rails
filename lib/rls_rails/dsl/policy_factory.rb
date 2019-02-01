@@ -1,5 +1,7 @@
-module DSL
+module RLS
   class PolicyFactory
+    include RLS::Util
+
     def initialize tbl_name
       @tbl_name = tbl_name.to_sym
     end
@@ -28,28 +30,36 @@ module DSL
     end
 
     def using_relation rel
-      policy ('via_'+rel.to_s.pluralize).to_sym do
+      policy(('via_'+ rel.to_s.pluralize).to_sym) do
         using_relation rel.to_sym
       end
     end
 
-    def using_relations *rels
+    def using_relations(*rels)
       # Unwrap arguments given in a style like 'using_relation opener: club_record_id, client: client_id'
       if rels.size == 1 && rels[0].is_a?(Hash)
         rels = rels[0]
       end
 
-      rel_names = rels.map do |rel|
-        rel = rel[1]
-        if rel.respond_to? :table_name
-          rel.table_name
-        else
-          rel.to_s.pluralize
-        end
-      end
+      rel_names = rels.map(&:second).map(&method(:derive_rel_tbl)).map(&:to_s)
 
-      policy ('via_' + rel_names.join('_and_')).to_sym do
-        using_relation *rels
+      policy(('via_' + rel_names.join('_and_')).to_sym) do
+        using_relation(*rels)
+      end
+    end
+
+    # Shorthand to create a policy that admits rows that find a join partner in another table
+    def using_table(other_tbl, match: nil, primary_key: match, foreign_key: match, client_id: :client_id)
+      other_tbl = derive_rel_tbl other_tbl
+      policy("match_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
+        using <<-SQL
+    EXISTS (
+      SELECT NULL
+      FROM #{other_tbl}
+      WHERE #{@tbl}.#{primary_key} = #{other_tbl}.#{foreign_key}
+        AND #{other_tbl}.#{client_id} = current_client_id()
+    )
+        SQL
       end
     end
   end
