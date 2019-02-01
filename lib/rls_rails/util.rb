@@ -29,7 +29,7 @@ module RLS
     end
 
     def policy_path table = false, version = false
-      path = Railtie.config.rls.policy_dir
+      path = Railtie.config.rls_rails.policy_dir
       path = path + "/#{table}/" if table
       path << "#{table}_v#{sprintf('%02d', version)}.rb" if version
       path

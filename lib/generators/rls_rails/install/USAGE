@@ -1,0 +1,9 @@
+Description:
+    Creates migration to install rls_rails and created initializer'to configure the gem
+
+Example:
+    rails g rls_rails:install
+
+    This will create:
+        db/migrate/<timestamp>_add_rls_functions.rb
+        config/initializers/rls_rails.rb

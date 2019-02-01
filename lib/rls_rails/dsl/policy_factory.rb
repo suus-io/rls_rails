@@ -21,10 +21,10 @@ module RLS
       end
     end
 
-    def using_client
-      policy :match_client do
+    def using_tenant
+      policy :match_tenant do
         using <<-SQL
-    current_client_id() = client_id
+    current_tenant_id() = #{tenant_fk}
         SQL
       end
     end
@@ -36,7 +36,7 @@ module RLS
     end
 
     def using_relations(*rels)
-      # Unwrap arguments given in a style like 'using_relation opener: club_record_id, client: client_id'
+      # Unwrap arguments given in a style like 'using_relation opener: :club_record_id, tenant: :tenant_id'
       if rels.size == 1 && rels[0].is_a?(Hash)
         rels = rels[0]
       end
@@ -49,7 +49,7 @@ module RLS
     end
 
     # Shorthand to create a policy that admits rows that find a join partner in another table
-    def using_table(other_tbl, match: nil, primary_key: match, foreign_key: match, client_id: :client_id)
+    def using_table(other_tbl, match: nil, primary_key: match, foreign_key: match, tenant_id: tenant_fk)
       other_tbl = derive_rel_tbl other_tbl
       policy("match_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
         using <<-SQL
@@ -57,7 +57,7 @@ module RLS
       SELECT NULL
       FROM #{other_tbl}
       WHERE #{@tbl}.#{primary_key} = #{other_tbl}.#{foreign_key}
-        AND #{other_tbl}.#{client_id} = current_client_id()
+        AND #{other_tbl}.#{tenant_id} = current_tenant_id()
     )
         SQL
       end

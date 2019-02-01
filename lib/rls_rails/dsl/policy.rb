@@ -6,13 +6,13 @@ module RLS
       @tbl = table
       @policy = name
       @permissive = true
-      @to = :public
+      @to = [:public]
       @on = [:all]
       @using = false
       @check = false
     end
 
-    def on(on_array)
+    def on(*on_array)
       @on = Array.wrap(on_array).map(&:to_sym)
       raise "'#{@on.join(', ')}' is no valid option!" if (@on & [:all, :select, :insert, :update, :delete]).none?
     end
@@ -23,7 +23,7 @@ module RLS
 
     # Shorthand for creating a policy which simply checks whether the given relations are all accessible
     def using_relation *rels
-      # Unwrap arguments given in a style like 'using_relation opener: club_record_id, client: client_id'
+      # Unwrap arguments given in a style like 'using_relation opener: :club_record_id, tenant: :tenant_id'
       rels = rels[0] if rels.size == 1 && rels[0].is_a?(Hash)
 
       @using = rels.map do |v|
@@ -66,22 +66,24 @@ module RLS
       !permissive?
     end
 
-    def to name
-      @to = name.to_sym
+    def to *name
+      @to = Array.wrap(name).map(&:to_sym)
     end
 
     def to_create_sql
-      q =  "CREATE POLICY #{@policy.to_s} ON #{@tbl.to_s}\n"
+      tos = @to.map(&:to_s).join(', ').upcase
+      ons = @on.join(', ').upcase
+      q =  "CREATE POLICY #{@policy} ON #{@tbl}\n"
       q << " AS #{@permissive ? 'PERMISSIVE' : 'RESTRICTIVE'}\n" unless @permissive
-      q << " FOR #{@on.join(', ').upcase}\n" if @on.any? && @on != [:all]
-      q << " TO #{role}\n" if @to != :public
+      q << " FOR #{ons}\n" if @on.any? && ons != 'ALL'
+      q << " TO #{tos}\n" if tos != 'PUBLIC'
       q << "USING (\n#{@using})" if @using.present?
       q << "WITH CHECK (\n#{@check})" if @check.present?
       q << ';'
     end
 
     def to_drop_sql
-      "DROP POLICY IF EXISTS #{@policy.to_s} ON #{@tbl.to_s};"
+      "DROP POLICY IF EXISTS #{@policy} ON #{@tbl};"
     end
   end
 end
