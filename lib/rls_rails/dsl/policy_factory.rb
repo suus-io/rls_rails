@@ -62,5 +62,9 @@ module RLS
         SQL
       end
     end
+
+    def tenant_fk
+      Railtie.config.rls_rails.tenant_fk
+    end
   end
 end

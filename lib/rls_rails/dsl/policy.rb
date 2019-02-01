@@ -85,5 +85,9 @@ module RLS
     def to_drop_sql
       "DROP POLICY IF EXISTS #{@policy} ON #{@tbl};"
     end
+
+    def tenant_fk
+      Railtie.config.rls_rails.tenant_fk
+    end
   end
 end
