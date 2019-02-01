@@ -1,0 +1,9 @@
+Description:
+    Generates a new or updates an existing policy
+
+Example:
+    rails generate policy table_name
+
+    This will create:
+        db/migrate/<timestamp>_update_<name>_policy.rb
+        db/policies/<name>/<name>_<nn>.rb
