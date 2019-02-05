@@ -10,7 +10,21 @@ module RLS
         end
 
         dir.down do
-          q = "ALTER TABLE #{table} DISABLE ROW LEVEL SECURITY;"
+          q = "ALTER TABLE #{table} DISABLE ROW LEVEL SECURITY#{force ? ', NO FORCE ROW LEVEL SECURITY' : ''};"
+          execute q
+        end
+      end
+    end
+
+    def disable_rls table, force: false
+      reversible do |dir|
+        dir.up do
+          q = "ALTER TABLE #{table} DISABLE ROW LEVEL SECURITY#{force ? ', NO FORCE ROW LEVEL SECURITY' : ''};"
+          execute q
+        end
+
+        dir.down do
+          q = "ALTER TABLE #{table} ENABLE ROW LEVEL SECURITY#{force ? ', FORCE ROW LEVEL SECURITY' : ''};"
           execute q
         end
       end
