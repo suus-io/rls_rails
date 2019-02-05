@@ -29,6 +29,14 @@ module RLS
       end
     end
 
+    def check_tenant
+      policy :check_tenant do
+        check <<-SQL
+    current_tenant_id() = #{tenant_fk}
+        SQL
+      end
+    end
+
     def using_relation rel
       policy(('via_'+ rel.to_s.pluralize).to_sym) do
         using_relation rel.to_sym
@@ -53,6 +61,21 @@ module RLS
       other_tbl = derive_rel_tbl other_tbl
       policy("match_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
         using <<-SQL
+    EXISTS (
+      SELECT NULL
+      FROM #{other_tbl}
+      WHERE #{@tbl}.#{primary_key} = #{other_tbl}.#{foreign_key}
+        AND #{other_tbl}.#{tenant_id} = current_tenant_id()
+    )
+        SQL
+      end
+    end
+
+    # Shorthand to create a policy that admits rows that find a join partner in another table
+    def check_table(other_tbl, match: nil, primary_key: match, foreign_key: match, tenant_id: tenant_fk)
+      other_tbl = derive_rel_tbl other_tbl
+      policy("check_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
+        check <<-SQL
     EXISTS (
       SELECT NULL
       FROM #{other_tbl}

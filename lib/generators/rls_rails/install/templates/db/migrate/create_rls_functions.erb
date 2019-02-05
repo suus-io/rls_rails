@@ -5,7 +5,7 @@ class AddRlsFunctions < <%= activerecord_migration_class %>
       -- this varaible is set on a connection basis before every action
       -- If it is not set, it will return NULL and all non-public tables will seem empty.
       CREATE FUNCTION current_tenant_id() RETURNS BIGINT AS $$
-        SELECT current_setting('rls.tenant_id', TRUE)::BIGINT
+        SELECT NULLIF(current_setting('rls.tenant_id', TRUE), '')::BIGINT;
       $$ LANGUAGE sql SECURITY DEFINER STABLE COST 10;
       
       -- This function sets an variable on a per connection (session) basis to signal
