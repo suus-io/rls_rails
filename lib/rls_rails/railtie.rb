@@ -10,6 +10,7 @@ module RLS
     config.rls_rails = ActiveSupport::OrderedOptions.new
     config.rls_rails.policy_dir = 'db/policies'
     config.rls_rails.tenant_class = nil
+    config.rls_rails.user_class = nil
     config.rls_rails.tenant_fk = :tenant_id
 
     initializer "rls_rails.load" do

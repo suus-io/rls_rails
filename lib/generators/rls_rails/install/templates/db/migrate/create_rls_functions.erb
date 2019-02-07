@@ -1,6 +1,14 @@
 class AddRlsFunctions < <%= activerecord_migration_class %>
   def self.up
     connection.execute <<-SQL
+
+      -- This function returns the id of the current user or NULL if not set
+      -- this varaible is set on a connection basis before every action
+      -- If it is not set, it will return NULL and all non-public tables will seem empty.
+      CREATE FUNCTION current_user_id() RETURNS BIGINT AS $$
+      SELECT NULLIF(current_setting('rls.user_id', TRUE), '')::BIGINT;
+      $$ LANGUAGE sql SECURITY DEFINER STABLE COST 10;
+
       -- This function returns the id of the current tenant or NULL if not set
       -- this varaible is set on a connection basis before every action
       -- If it is not set, it will return NULL and all non-public tables will seem empty.

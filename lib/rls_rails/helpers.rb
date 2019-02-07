@@ -12,7 +12,13 @@ module RLS
   def self.set_tenant tenant
     raise "Tenant is nil!" unless tenant.present?
     print "Accessing database as #{tenant.name}\n"
-    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id&.to_s};"
+    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
+  end
+
+  def self.set_user user
+    raise "User is nil!" unless user.present?
+    print "Accessing database as #{user.class}##{user.id}\n"
+    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
   end
 
   def self.disable_for_block &block
@@ -61,6 +67,7 @@ module RLS
 
   def self.reset!
     print "Resetting RLS settings.\n"
+    ActiveRecord::Base.connection.execute "RESET rls.user_id;"
     ActiveRecord::Base.connection.execute "RESET rls.tenant_id;"
     ActiveRecord::Base.connection.execute "RESET rls.disable;"
   end
@@ -77,7 +84,17 @@ module RLS
     tenant_class.find id
   end
 
+  def self.current_user
+    id = current_user_id
+    return nil unless id
+    user_class.find id
+  end
+
   def self.tenant_class
     Railtie.config.rls_rails.tenant_class
+  end
+
+  def self.user_class
+    Railtie.config.rls_rails.user_class
   end
 end
