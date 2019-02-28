@@ -7,14 +7,14 @@ module RLS
       @policy = name
       @permissive = true
       @to = [:public]
-      @on = [:all]
+      @on = :all
       @using = false
       @check = false
     end
 
-    def on(*on_array)
-      @on = Array.wrap(on_array).map(&:to_sym)
-      raise "'#{@on.join(', ')}' is no valid option!" if (@on & [:all, :select, :insert, :update, :delete]).none?
+    def on(on)
+      @on = on.to_sym
+      raise "'#{on}' is no valid option!" unless [:all, :select, :insert, :update, :delete].include? @on
     end
 
     def using(using_str)
@@ -72,10 +72,9 @@ module RLS
 
     def to_create_sql
       tos = @to.map(&:to_s).join(', ').upcase
-      ons = @on.join(', ').upcase
       q =  "CREATE POLICY #{@policy} ON #{@tbl}\n"
       q << " AS #{@permissive ? 'PERMISSIVE' : 'RESTRICTIVE'}\n" unless @permissive
-      q << " FOR #{ons}\n" if @on.any? && ons != 'ALL'
+      q << " FOR #{@on}\n"
       q << " TO #{tos}\n" if tos != 'PUBLIC'
       q << "USING (\n#{@using})" if @using.present?
       q << "WITH CHECK (\n#{@check})" if @check.present?
