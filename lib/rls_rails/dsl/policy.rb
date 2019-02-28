@@ -73,9 +73,9 @@ module RLS
     def to_create_sql
       tos = @to.map(&:to_s).join(', ').upcase
       q =  "CREATE POLICY #{@policy} ON #{@tbl}\n"
-      q << " AS #{@permissive ? 'PERMISSIVE' : 'RESTRICTIVE'}\n" unless @permissive
-      q << " FOR #{@on}\n"
-      q << " TO #{tos}\n" if tos != 'PUBLIC'
+      q << "AS #{@permissive ? 'PERMISSIVE' : 'RESTRICTIVE'}\n" unless @permissive
+      q << "FOR #{@on}\n"
+      q << "TO #{tos}\n" if tos != 'PUBLIC'
       q << "USING (\n#{@using})" if @using.present?
       q << "WITH CHECK (\n#{@check})" if @check.present?
       q << ';'

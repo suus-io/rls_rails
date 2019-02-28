@@ -1,23 +1,23 @@
 module RLS
   def self.disable!
     ActiveRecord::Base.connection.execute("SET SESSION rls.disable = TRUE;")
-    print "WARNING: ROW LEVEL SECURITY DISABLED!\n"
+    debug_print "WARNING: ROW LEVEL SECURITY DISABLED!\n"
   end
 
   def self.enable!
     ActiveRecord::Base.connection.execute("SET SESSION rls.disable = FALSE;")
-    print "ROW LEVEL SECURITY ENABLED!\n"
+    debug_print "ROW LEVEL SECURITY ENABLED!\n"
   end
 
   def self.set_tenant tenant
     raise "Tenant is nil!" unless tenant.present?
-    print "Accessing database as #{tenant.name}\n"
+    debug_print "Accessing database as #{tenant.name}\n"
     ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
   end
 
   def self.set_user user
     raise "User is nil!" unless user.present?
-    print "Accessing database as #{user.class}##{user.id}\n"
+    debug_print "Accessing database as #{user.class}##{user.id}\n"
     ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
   end
 
@@ -66,7 +66,7 @@ module RLS
   end
 
   def self.reset!
-    print "Resetting RLS settings.\n"
+    debug_print "Resetting RLS settings.\n"
     ActiveRecord::Base.connection.execute "RESET rls.user_id;"
     ActiveRecord::Base.connection.execute "RESET rls.tenant_id;"
     ActiveRecord::Base.connection.execute "RESET rls.disable;"
@@ -96,5 +96,9 @@ module RLS
 
   def self.user_class
     Railtie.config.rls_rails.user_class
+  end
+
+  def self.debug_print s
+    print s if Railtie.config.rls_rails.verbose
   end
 end
