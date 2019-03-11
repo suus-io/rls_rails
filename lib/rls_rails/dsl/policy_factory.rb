@@ -55,9 +55,10 @@ module RLS
       # Unwrap arguments given in a style like 'using_relation opener: :club_record_id, tenant: :tenant_id'
       if rels.size == 1 && rels[0].is_a?(Hash)
         rels = rels[0]
+        rel_names = rels.map(&:second).map(&method(:derive_rel_tbl)).map(&:to_s)
+      else
+        rel_names = rels.map(&method(:derive_rel_tbl)).map(&:to_s)
       end
-
-      rel_names = rels.map(&:second).map(&method(:derive_rel_tbl)).map(&:to_s)
 
       policy(('via_' + rel_names.join('_and_')).to_sym) do
         using_relation(*rels)
