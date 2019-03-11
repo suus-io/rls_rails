@@ -57,7 +57,7 @@ module RLS
     def drop_policies_for table
       existing_policies = execute("SELECT policyname FROM pg_policies WHERE tablename = '#{table}'").values.flatten
       existing_policies.each do |policy_name|
-        execute "DROP POLICY #{policy_name} ON #{table};"
+        perform_query "DROP POLICY #{policy_name} ON #{table};"
       end
     end
 
@@ -65,22 +65,27 @@ module RLS
       RLS.clear_policies!
       enable_rls table, force: true
       load policy_path(table, version)
-      execute RLS.create_sql(table)
+      perform_query RLS.create_sql(table)
     end
 
     def do_drop_policy table, version: nil
       RLS.clear_policies!
       load policy_path(table, version || last_version_of(table))
-      execute RLS.drop_sql(table)
+      perform_query RLS.drop_sql(table)
     end
 
     def do_enable_rls table, force: false
       q = "ALTER TABLE #{table} ENABLE ROW LEVEL SECURITY#{force ? ', FORCE ROW LEVEL SECURITY' : ''};"
-      execute q
+      perform_query q
     end
 
     def do_disable_rls table, force: false
       q = "ALTER TABLE #{table} DISABLE ROW LEVEL SECURITY#{force ? ', NO FORCE ROW LEVEL SECURITY' : ''};"
+      perform_query q
+    end
+
+    def perform_query q
+      debug_print q
       execute q
     end
   end

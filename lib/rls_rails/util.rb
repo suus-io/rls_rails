@@ -34,5 +34,9 @@ module RLS
       path << "#{table}_v#{sprintf('%02d', version)}.rb" if version
       path
     end
+
+    def debug_print s
+      print s if Railtie.config.rls_rails.verbose
+    end
   end
 end
