@@ -13,34 +13,42 @@ module RLS
       RLS.policies[@tbl_name][policy_name.to_sym] = policy
     end
 
-    def disableable
-      policy :all_when_disabled_rls do
+    def disableable &block
+      p = policy :all_when_disabled_rls do
         using <<-SQL
     rls_disabled()
         SQL
       end
+      p.instance_eval(&block) if block_given?
+      p
     end
 
-    def using_tenant
-      policy :match_tenant do
+    def using_tenant &block
+      p = policy :match_tenant do
         using <<-SQL
     current_tenant_id() = #{tenant_fk}
         SQL
       end
+      p.instance_eval(&block) if block_given?
+      p
     end
 
-    def check_tenant
-      policy :check_tenant do
+    def check_tenant &block
+      p = policy :check_tenant do
         check <<-SQL
     current_tenant_id() = #{tenant_fk}
         SQL
       end
+      p.instance_eval(&block) if block_given?
+      p
     end
 
-    def using_relation rel
-      policy(('via_'+ rel.to_s.pluralize).to_sym) do
+    def using_relation rel, &block
+      p = policy(('via_'+ rel.to_s.pluralize).to_sym) do
         using_relation rel.to_sym
       end
+      p.instance_eval(&block) if block_given?
+      p
     end
 
     def using_relations(*rels)
