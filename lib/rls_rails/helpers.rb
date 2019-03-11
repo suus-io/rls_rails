@@ -97,4 +97,10 @@ module RLS
   def self.user_class
     Railtie.config.rls_rails.user_class
   end
+
+  protected
+
+  def self.debug_print s
+    print s if Railtie.config.rls_rails.verbose
+  end
 end
