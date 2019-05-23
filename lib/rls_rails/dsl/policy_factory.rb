@@ -66,9 +66,9 @@ module RLS
     end
 
     # Shorthand to create a policy that admits rows that find a join partner in another table
-    def using_table(other_tbl, match: nil, primary_key: match, foreign_key: match, tenant_id: tenant_fk)
+    def using_table(other_tbl, match: nil, primary_key: match, foreign_key: match, tenant_id: tenant_fk, &block)
       other_tbl = derive_rel_tbl other_tbl
-      policy("match_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
+      p = policy("match_#{other_tbl}_on_#{primary_key}_eq_#{foreign_key}".to_sym) do
         using <<-SQL
     EXISTS (
       SELECT NULL
@@ -78,6 +78,8 @@ module RLS
     )
         SQL
       end
+      p.instance_eval(&block) if block_given?
+      p
     end
 
     # Shorthand to create a policy that admits rows that find a join partner in another table
