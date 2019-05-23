@@ -73,9 +73,9 @@ module RLS
   end
 
   def self.status
-    query = "SELECT current_setting('rls.tenant_id', TRUE), current_setting('rls.disable', TRUE);"
+    query = "SELECT current_setting('rls.tenant_id', TRUE), current_setting('rls.user_id', TRUE), current_setting('rls.disable', TRUE);"
     result = ActiveRecord::Base.connection.execute(query).values[0]
-    [:tenant_id, :disable_rls].zip(result).to_h
+    [:tenant_id, :user_id, :disable_rls].zip(result).to_h
   end
 
   def self.current_tenant
