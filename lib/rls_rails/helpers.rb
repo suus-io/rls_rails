@@ -36,6 +36,7 @@ module RLS
 
   def self.set_tenant_for_block tenant, &block
     tenant_was = self.current_tenant_id
+    disabled_was = disabled?
     self.set_tenant tenant
     yield tenant, block
   ensure
@@ -44,6 +45,8 @@ module RLS
     else
       ActiveRecord::Base.connection.execute "RESET rls.tenant_id;"
     end
+
+    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = #{disabled_was};"
   end
 
   def self.run_per_tenant &block
