@@ -53,8 +53,7 @@ module RLS
   def self.status= status
     tenant_id = status[:tenant_id]
     user_id = status[:user_id]
-    disable = status[:disable]
-
+    disable = status[:disable].nil? ? false : status[:disable]
     ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
       SET SESSION rls.disable   = '#{disable}';
       SET SESSION rls.user_id   = '#{user_id}';
