@@ -213,11 +213,16 @@ which mitigates attacks via SQL-injections. Currently, the attacker could disabl
 SQL injection and query all data. If the session variables for RLS are signed, the 
 attacker needs also access to a secret on another system.
 
-### Testing
-Currently, this gem contains no test cases yet :-(
+## Contributing code
+1. Fork the repository.
+2. Run `bin/setup` installs dependencies and create the dummy application database.
+3. Run `bin/rspec` to verify that the tests pass.
+4. Make your change with new passing tests, following existing style.
+5. Write a good commit message, push your fork, and submit a pull request.
+
 
 ## License
-Development of this gem was funded by [suus](https://suus.io). 
-Strongly inspired by [scenic](https://github.com/scenic-views/scenic).
+Development of this gem was funded by [SUUS](https://suus.io). 
+Inspired by [scenic](https://github.com/scenic-views/scenic).
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
