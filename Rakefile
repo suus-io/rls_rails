@@ -24,4 +24,9 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
+namespace :dummy do
+  require_relative "spec/dummy/config/application"
+  Dummy::Application.load_tasks
+end
+
 task default: :test

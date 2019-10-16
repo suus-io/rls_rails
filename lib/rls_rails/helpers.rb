@@ -1,17 +1,17 @@
 module RLS
   def self.disable!
-    ActiveRecord::Base.connection.execute("SET SESSION rls.disable = TRUE;")
+    execute_sql("SET SESSION rls.disable = TRUE;")
     debug_print "WARNING: ROW LEVEL SECURITY DISABLED!\n"
   end
 
   def self.disabled?
-    ActiveRecord::Base.connection.execute(<<-SQL.strip_heredoc).values[0][0] === true
+    execute_sql(<<-SQL.strip_heredoc).values[0][0] === true
       SELECT NULLIF(current_setting('rls.disable', TRUE), '')::BOOLEAN;
     SQL
   end
 
   def self.enable!
-    ActiveRecord::Base.connection.execute("SET SESSION rls.disable = FALSE;")
+    execute_sql("SET SESSION rls.disable = FALSE;")
     debug_print "ROW LEVEL SECURITY ENABLED!\n"
   end
 
@@ -22,17 +22,17 @@ module RLS
   def self.set_tenant tenant
     raise "Tenant is nil!" unless tenant.present?
     debug_print "Accessing database as #{tenant.name}\n"
-    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
+    execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
   end
 
   def self.set_user user
     raise "User is nil!" unless user.present?
     debug_print "Accessing database as #{user.class}##{user.id}\n"
-    ActiveRecord::Base.connection.execute "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
+    execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
   end
 
   def self.current_tenant_id
-    ActiveRecord::Base.connection.execute(<<-SQL.strip_heredoc).values[0][0].presence
+    execute_sql(<<-SQL.strip_heredoc).values[0][0].presence
       SELECT current_setting('rls.tenant_id', TRUE);
     SQL
   end
@@ -40,7 +40,7 @@ module RLS
   # Resets all session variables set by this gem
   def self.reset!
     debug_print "Resetting RLS settings.\n"
-    ActiveRecord::Base.connection.execute <<-SQL
+    execute_sql <<-SQL
       RESET rls.user_id;
       RESET rls.tenant_id;
       RESET rls.disable;
@@ -54,7 +54,7 @@ module RLS
     tenant_id = status[:tenant_id]
     user_id = status[:user_id]
     disable = status[:disable].nil? ? false : status[:disable]
-    ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
+    execute_sql <<-SQL.strip_heredoc
       SET SESSION rls.disable   = '#{disable}';
       SET SESSION rls.user_id   = '#{user_id}';
       SET SESSION rls.tenant_id = '#{tenant_id}';
@@ -64,7 +64,7 @@ module RLS
   # @return [Hash] Values of the current RLS sesssion
   # @see #status
   def self.status
-    result = ActiveRecord::Base.connection.execute(<<-SQL).values[0]
+    result = execute_sql(<<-SQL).values[0]
       SELECT current_setting('rls.tenant_id', TRUE), 
              current_setting('rls.user_id',   TRUE),
              current_setting('rls.disable',   TRUE);
@@ -127,7 +127,11 @@ module RLS
     Railtie.config.rls_rails.user_class
   end
 
-  protected
+  private
+
+  def self.execute_sql query
+    ActiveRecord::Base.connection.execute query
+  end
 
   def self.debug_print s
     print s if Railtie.config.rls_rails.verbose

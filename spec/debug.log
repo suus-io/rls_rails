@@ -1,0 +1,549 @@
+# Logfile created on 2019-10-16 18:26:42 +0200 by logger.rb/61378
+D, [2019-10-16T18:27:51.973301 #23435] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:27:51.981182 #23435] DEBUG -- :   [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key)[0m
+D, [2019-10-16T18:27:51.981628 #23435] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:27:51.986049 #23435] DEBUG -- :   [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key)[0m
+D, [2019-10-16T18:27:52.015746 #23435] DEBUG -- :   [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+D, [2019-10-16T18:27:52.023931 #23435] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:27:52.025723 #23435] DEBUG -- :   [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (0)[0m
+D, [2019-10-16T18:27:52.034537 #23435] DEBUG -- :   [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+D, [2019-10-16T18:27:52.039384 #23435] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:27:52.044416 #23435] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:27:52.045558 #23435] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2019-10-16 16:27:52.044760"], ["updated_at", "2019-10-16 16:27:52.044760"]]
+D, [2019-10-16T18:27:52.046487 #23435] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:03.351054 #23461] DEBUG -- :   [1m[35m (8.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:28:03.357175 #23461] DEBUG -- :   [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key)[0m
+D, [2019-10-16T18:28:03.359214 #23461] DEBUG -- :   [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:28:03.364046 #23461] DEBUG -- :   [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key)[0m
+D, [2019-10-16T18:28:03.396584 #23461] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:28:03.401487 #23461] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:28:03.406343 #23461] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:28:03.407224 #23461] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:03.445579 #23461] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:28:03.446217 #23461] DEBUG -- :   [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES RETURNING "id"[0m
+D, [2019-10-16T18:28:03.447133 #23461] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:03.447419 #23461] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:28:03.447887 #23461] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:28:03.448084 #23461] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:28:03.448421 #23461] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:28:51.786534 #23497] DEBUG -- :   [1m[35m (4.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:28:51.795965 #23497] DEBUG -- :   [1m[35m (9.1ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:28:51.797776 #23497] DEBUG -- :   [1m[35m (1.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:28:51.802295 #23497] DEBUG -- :   [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key)[0m
+D, [2019-10-16T18:28:51.830553 #23497] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:28:51.834399 #23497] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:28:51.838352 #23497] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:28:51.839042 #23497] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:59.334290 #23509] DEBUG -- :   [1m[35m (3.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:28:59.342788 #23509] DEBUG -- :   [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:28:59.345103 #23509] DEBUG -- :   [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:28:59.353431 #23509] DEBUG -- :   [1m[35m (8.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:28:59.380696 #23509] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:28:59.385420 #23509] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:28:59.388991 #23509] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:28:59.389577 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:59.426127 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:28:59.426914 #23509] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:28:59.427825 #23509] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:28:59.428043 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:28:59.428497 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:28:59.428685 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:28:59.428927 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:28:59.429105 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:28:59.429225 #23509] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:29:29.482969 #23536] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:29:29.491737 #23536] DEBUG -- :   [1m[35m (8.4ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:29:29.494282 #23536] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:29:29.502474 #23536] DEBUG -- :   [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:29:29.529872 #23536] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:29:29.535361 #23536] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:29:29.538837 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:29:29.539481 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:29:29.575526 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:29:29.576315 #23536] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:29:29.577291 #23536] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:29:29.577539 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:29:29.578019 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:29:29.578216 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:29:29.578462 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:29:29.578594 #23536] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:29:29.585259 #23536] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:29:38.903548 #23547] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:29:38.912884 #23547] DEBUG -- :   [1m[35m (9.1ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:29:38.915338 #23547] DEBUG -- :   [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:29:38.923468 #23547] DEBUG -- :   [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:29:38.951975 #23547] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:29:38.956959 #23547] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:29:38.960831 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:29:38.961438 #23547] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:29:38.998086 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:29:38.998877 #23547] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:29:38.999810 #23547] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:29:39.000033 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:29:39.000479 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:29:39.000680 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:29:39.000940 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:29:39.001073 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:29:39.001283 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:29:39.001446 #23547] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:30:36.946947 #23586] DEBUG -- :   [1m[35m (2.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:30:36.955500 #23586] DEBUG -- :   [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:30:36.957438 #23586] DEBUG -- :   [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:30:36.965217 #23586] DEBUG -- :   [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:30:36.994904 #23586] DEBUG -- :   [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:30:36.999695 #23586] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:30:37.003202 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:30:37.003809 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:30:37.040384 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:30:37.041183 #23586] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:30:37.042343 #23586] DEBUG -- :   [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:30:37.042593 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:30:37.043085 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:30:37.043297 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:30:37.043535 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:30:37.043669 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:30:37.043851 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:30:37.043977 #23586] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:33:08.829996 #23695] DEBUG -- :   [1m[35m (4.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:33:08.838502 #23695] DEBUG -- :   [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:33:08.840802 #23695] DEBUG -- :   [1m[35m (1.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:33:08.849340 #23695] DEBUG -- :   [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:33:08.880819 #23695] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:33:08.888271 #23695] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:33:08.892617 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:33:08.893283 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:33:08.924874 #23695] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:33:08.931785 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:33:08.932651 #23695] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:33:08.933641 #23695] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:33:08.933871 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:33:08.934098 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:33:08.934411 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:33:08.934596 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:33:08.934858 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:33:08.935485 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:33:08.936003 #23695] DEBUG -- :   [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:33:08.936971 #23695] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:33:08.937198 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:33:08.937349 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:33:08.937546 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 2;[0m
+D, [2019-10-16T18:33:08.937732 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:33:08.937910 #23695] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:54.944195 #23765] DEBUG -- :   [1m[35m (7.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:34:54.952585 #23765] DEBUG -- :   [1m[35m (8.1ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:34:54.954812 #23765] DEBUG -- :   [1m[35m (1.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:34:54.962815 #23765] DEBUG -- :   [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:34:54.995852 #23765] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:34:55.002699 #23765] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:34:55.008053 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.009064 #23765] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.047711 #23765] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:55.055050 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.055835 #23765] DEBUG -- :   [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:34:55.058786 #23765] DEBUG -- :   [1m[35m (2.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.059052 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:34:55.059350 #23765] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:34:55.059607 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:34:55.059746 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:55.059962 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:34:55.060390 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.060834 #23765] DEBUG -- :   [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:34:55.061759 #23765] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.061939 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:34:55.062052 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:34:55.062196 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 2;[0m
+D, [2019-10-16T18:34:55.062311 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:34:55.062426 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:55.062895 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.063417 #23765] DEBUG -- :   [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:34:55.064359 #23765] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.064568 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 3;[0m
+D, [2019-10-16T18:34:55.064736 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:55.065133 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.065530 #23765] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:34:55.066479 #23765] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.066706 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:34:55.066890 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:34:55.067009 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:34:55.067200 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:34:55.067413 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:34:55.067593 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '4';
+[0m
+D, [2019-10-16T18:34:55.068014 #23765] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:34:55.068517 #23765] DEBUG -- :   [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:34:55.069456 #23765] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:34:55.069674 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:34:55.069859 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:34:55.069975 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:34:55.070110 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:34:55.070248 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '5';
+[0m
+D, [2019-10-16T18:34:55.070416 #23765] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.049306 #23933] DEBUG -- :   [1m[35m (3.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:38:19.061554 #23933] DEBUG -- :   [1m[35m (11.9ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:38:19.063921 #23933] DEBUG -- :   [1m[35m (2.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:38:19.072075 #23933] DEBUG -- :   [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:38:19.102501 #23933] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:38:19.107216 #23933] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:38:19.110686 #23933] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.111283 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.142667 #23933] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.149585 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.150384 #23933] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:38:19.151285 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.151467 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:38:19.151682 #23933] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:38:19.151899 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:38:19.152026 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.152332 #23933] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:38:19.152803 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.153223 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:38:19.154136 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.154337 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:38:19.154469 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:38:19.154639 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 2;[0m
+D, [2019-10-16T18:38:19.154770 #23933] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:38:19.154940 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.155549 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.155947 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:38:19.156834 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.157030 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 3;[0m
+D, [2019-10-16T18:38:19.157216 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.157583 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.157982 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:38:19.158844 #23933] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.159048 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:38:19.159258 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:38:19.159391 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:38:19.159563 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:38:19.159727 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.159875 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '4';
+[0m
+D, [2019-10-16T18:38:19.160207 #23933] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.160534 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:38:19.161433 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.161639 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:38:19.161827 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:38:19.161953 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:38:19.162093 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:38:19.162243 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '5';
+[0m
+D, [2019-10-16T18:38:19.162417 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:19.162861 #23933] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.163210 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 1"]]
+D, [2019-10-16T18:38:19.164084 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.164306 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.164668 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 2"]]
+D, [2019-10-16T18:38:19.165544 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.165779 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:19.166151 #23933] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 3"]]
+D, [2019-10-16T18:38:19.167049 #23933] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:38:19.167271 #23933] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:38:59.933971 #23961] DEBUG -- :   [1m[35m (4.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:38:59.942411 #23961] DEBUG -- :   [1m[35m (8.1ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:38:59.944973 #23961] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:38:59.956523 #23961] DEBUG -- :   [1m[35m (11.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:38:59.985770 #23961] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:38:59.992016 #23961] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:38:59.997142 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:38:59.997763 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:00.029034 #23961] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.029492 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.029727 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.030012 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.030222 #23961] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.030427 #23961] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:00.030705 #23961] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.340060 #23977] DEBUG -- :   [1m[35m (2.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "tenants"[0m
+D, [2019-10-16T18:39:17.348301 #23977] DEBUG -- :   [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:39:17.350323 #23977] DEBUG -- :   [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+D, [2019-10-16T18:39:17.361424 #23977] DEBUG -- :   [1m[35m (10.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying)[0m
+D, [2019-10-16T18:39:17.390473 #23977] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+D, [2019-10-16T18:39:17.395345 #23977] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+D, [2019-10-16T18:39:17.399583 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.400232 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.432286 #23977] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.432560 #23977] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.433242 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.440826 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.441793 #23977] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "A"]]
+D, [2019-10-16T18:39:17.442862 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.443139 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.443406 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.443701 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 1;[0m
+D, [2019-10-16T18:39:17.443913 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.444134 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = '';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:39:17.444579 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.444850 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.445314 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:39:17.446247 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.446490 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.446657 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.446864 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 2;[0m
+D, [2019-10-16T18:39:17.447049 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = '';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:39:17.447289 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.447793 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.448060 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.448531 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:39:17.449478 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.449725 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 3;[0m
+D, [2019-10-16T18:39:17.449941 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.450379 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.450617 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.451029 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:39:17.451942 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.452146 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:39:17.452332 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.452446 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.452578 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 4;[0m
+D, [2019-10-16T18:39:17.452745 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.452902 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '4';
+[0m
+D, [2019-10-16T18:39:17.453156 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.453348 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.453690 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User A"]]
+D, [2019-10-16T18:39:17.454561 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.454752 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:39:17.454940 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.455054 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.455197 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 5;[0m
+D, [2019-10-16T18:39:17.455345 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '5';
+[0m
+D, [2019-10-16T18:39:17.455487 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.455818 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35m      RESET rls.user_id;
+      RESET rls.tenant_id;
+      RESET rls.disable;
+[0m
+D, [2019-10-16T18:39:17.456004 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.456363 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 1"]]
+D, [2019-10-16T18:39:17.457240 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.457458 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.457813 #23977] DEBUG -- :   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 2"]]
+D, [2019-10-16T18:39:17.458692 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.458905 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2019-10-16T18:39:17.459283 #23977] DEBUG -- :   [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("name") VALUES ($1) RETURNING "id"[0m  [["name", "User 3"]]
+D, [2019-10-16T18:39:17.460184 #23977] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2019-10-16T18:39:17.460399 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.460583 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.460699 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.460843 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 6;[0m
+D, [2019-10-16T18:39:17.460991 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.461171 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.461279 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.461406 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 7;[0m
+D, [2019-10-16T18:39:17.461547 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.461705 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34m      SELECT current_setting('rls.tenant_id', TRUE), 
+             current_setting('rls.user_id',   TRUE),
+             current_setting('rls.disable',   TRUE);
+[0m
+D, [2019-10-16T18:39:17.461828 #23977] DEBUG -- :   [1m[35m (0.0ms)[0m  [1m[35mSET SESSION rls.disable = FALSE;[0m
+D, [2019-10-16T18:39:17.461956 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = 8;[0m
+D, [2019-10-16T18:39:17.462106 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.462259 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '7';
+[0m
+D, [2019-10-16T18:39:17.462396 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.462541 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = 'false';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '6';
+[0m
+D, [2019-10-16T18:39:17.462681 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
+D, [2019-10-16T18:39:17.462825 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mSET SESSION rls.disable   = '';
+SET SESSION rls.user_id   = '';
+SET SESSION rls.tenant_id = '';
+[0m
+D, [2019-10-16T18:39:17.462983 #23977] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[34mSELECT current_setting('rls.tenant_id', TRUE);
+[0m
