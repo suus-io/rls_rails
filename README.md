@@ -12,6 +12,13 @@ may easily leak data or introduce severe security threads. With RLS PostgreSQL
 always double checks whether the data going in or out complies with the defined policies.
 
 ## Usage
+### Migrations
+- `enable_rls(table, force: false)`: Enables RLS for `table`. Option `force` yields to application of RLS for the table owner himself as well.
+- `disable_rls(table, force: false)`: Disables (`force`full ) RLS for `table`.
+- `create_policy(table, version: 1)`: Creates a policy for given table.
+- `drop_policy(table, version: nil)`: Drops all existing policies defined for `table`.
+- `update_policy(table, version: nil, revert_to_version: nil)`: Drops all existing policies for `table` and creates the latest policies (can be overriden by `version`)
+
 ### Policy Definition
 All policies for a table are defined in a single file. Policy-definitions are versioned in a 
 similar manner like SQL-views by [scenic](https://github.com/scenic-views/scenic) (which 
