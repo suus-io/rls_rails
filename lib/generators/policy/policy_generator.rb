@@ -36,7 +36,7 @@ end
     else
       migration_template(
           "db/migrate/update_policy.erb",
-          "db/migrate/update_policy_#{plural_file_name}_to_version_#{version}.rb",
+          "db/migrate/update_policy_for_#{plural_file_name}_to_version_#{version}.rb",
           )
     end
   end
@@ -57,9 +57,9 @@ end
 
     def migration_class_name
       if creating_new_policy?
-        "CreatePolicy#{class_name.gsub('.', '').pluralize}"
+        "CreatePolicyFor#{class_name.gsub('.', '').pluralize}"
       else
-        "UpdatePolicy#{class_name.pluralize}ToVersion#{version}"
+        "UpdatePolicyFor#{class_name.pluralize}ToVersion#{version}"
       end
     end
   end
