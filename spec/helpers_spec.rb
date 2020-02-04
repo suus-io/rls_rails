@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe RLS do
-  before(:each) { RLS.reset! }
+  before(:each) do
+    RLS.reset!
+    ActiveRecord::Base.connection.enable_query_cache!
+  end
+
   describe '.set_tenant_for_block' do
     context 'rls was unset' do
       it 'is unset before' do
@@ -61,6 +65,76 @@ RSpec.describe RLS do
         end
 
         expect(RLS.current_tenant_id).to eq nil
+      end
+    end
+  end
+
+  describe '.disable!' do
+    context 'currently disabled' do
+      before { RLS.disable! }
+
+      it 'clears not query cache' do
+        User.count
+        expect{ RLS.disable! }.not_to change { ActiveRecord::Base.connection.query_cache.size }
+      end
+    end
+
+    context 'currently enabled' do
+      before { RLS.enable! }
+
+      it 'clears not query cache' do
+        User.count
+        expect{ RLS.disable! }.to change { ActiveRecord::Base.connection.query_cache.size }.to 0
+      end
+    end
+  end
+
+  describe '.enable!' do
+    context 'currently disabled' do
+      before { RLS.disable! }
+
+      it 'clears not query cache' do
+        User.count
+        expect{ RLS.enable! }.to change { ActiveRecord::Base.connection.query_cache.size }.to 0
+      end
+    end
+
+    context 'currently enabled' do
+      before { RLS.enable! }
+
+      it 'clears not query cache' do
+        User.count
+        expect{ RLS.enable! }.not_to change { ActiveRecord::Base.connection.query_cache.size }
+      end
+    end
+  end
+
+  describe '.restore_status_after_block' do
+    context 'was disabled' do
+      before { RLS.disable! }
+
+      it 'clears query cache' do
+        User.count
+        expect{ RLS.restore_status_after_block{ RLS.enable! } }.
+            to change { ActiveRecord::Base.connection.query_cache.size }.to 0
+      end
+
+      it 'restores status' do
+        expect{ RLS.restore_status_after_block{ RLS.enable! } }.not_to change { RLS.status }
+      end
+    end
+
+    context 'was enabled' do
+      before { RLS.enable! }
+
+      it 'clears not query cache' do
+        User.count
+        expect{ RLS.restore_status_after_block{ RLS.enable! } }.
+            not_to change { ActiveRecord::Base.connection.query_cache.size }
+      end
+
+      it 'restores status' do
+        expect{ RLS.restore_status_after_block{ RLS.enable! } }.not_to change { RLS.status }
       end
     end
   end
