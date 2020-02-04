@@ -41,3 +41,5 @@ yarn-error.log
 /.yardoc
 /spec/examples.txt
 /aws/function/node_modules/*
+spec/dummy/log/*
+spec/debug.log
