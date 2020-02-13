@@ -7,6 +7,22 @@ RSpec.describe RLS do
   end
 
   describe '.set_tenant_for_block' do
+    it 'works for threads' do
+      RLS.enable!
+      expect(RLS.enabled?).to be_truthy
+
+      Thread.new do
+        RLS.disable!
+        expect(RLS.disabled?).to be_truthy
+      end.run
+
+      expect(RLS.enabled?).to be_truthy
+
+      RLS.disable_for_block do
+        expect(RLS.enabled?).to be_falsey
+      end
+    end
+
     context 'rls was unset' do
       it 'is unset before' do
         expect(RLS.current_tenant_id).to eq nil

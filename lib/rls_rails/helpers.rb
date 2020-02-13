@@ -1,8 +1,13 @@
+require 'concurrent'
+
 module RLS
+  # This variable is very problematic and not relieable, since in a
+  # threaded environment of a connection pool this module is changed and
+  # race conditions can occur, de-syncing the module-status with the true db status.
   @rls_status = {user_id: '', tenant_id: '', disabled: ''}
 
   def self.disable!
-    return if @rls_status[:disabled] === 'true'
+    return if RLS.status[:disable] === 'true' # do not use disabled? here since it may be blank
 
     clear_query_cache
     execute_sql("SET SESSION rls.disable = TRUE;")
@@ -17,7 +22,7 @@ module RLS
   end
 
   def self.enable!
-    return if @rls_status[:disabled] === 'false'
+    return if enabled?
 
     clear_query_cache
     debug_print "ROW LEVEL SECURITY ENABLED!\n"
@@ -31,7 +36,7 @@ module RLS
 
   def self.set_tenant tenant
     raise "Tenant is nil!" unless tenant.present?
-    return if @rls_status[:tenant_id] === tenant.id&.to_s && @rls_status[:disable] === 'false'
+    return if self.status[:tenant_id] === tenant.id&.to_s && enabled?
 
     clear_query_cache
     debug_print "Accessing database as #{tenant.name}\n"
@@ -41,7 +46,7 @@ module RLS
 
   def self.set_user user
     raise "User is nil!" unless user.present?
-    return if @rls_status[:user_id] === user.id&.to_s && @rls_status[:disable] === 'false'
+    return if self.status[:user_id] === user.id&.to_s && enabled?
 
     clear_query_cache
     debug_print "Accessing database as #{user.class}##{user.id}\n"
@@ -57,7 +62,7 @@ module RLS
 
   # Resets all session variables set by this gem
   def self.reset!
-    return if @rls_status[:tenant_id] === '' && @rls_status[:user_id] === '' && @rls_status[:disabled] === ''
+    return if self.status[:tenant_id] === '' && self.status[:user_id] === '' && self.status[:disabled] === ''
 
     debug_print "Resetting RLS settings.\n"
     execute_sql <<-SQL
@@ -76,7 +81,7 @@ module RLS
     tenant_id = status[:tenant_id].to_s
     user_id = status[:user_id].to_s
     disable = status[:disable].nil? ? 'false' : status[:disable].to_s
-    return if @rls_status[:tenant_id] === tenant_id && @rls_status[:user_id] === user_id && @rls_status[:disabled] === disable
+    return if self.status[:tenant_id] === tenant_id && self.status[:user_id] === user_id && self.status[:disabled] === disable
 
     clear_query_cache
     execute_sql <<-SQL.strip_heredoc
@@ -138,7 +143,7 @@ module RLS
 
   def self.run_per_tenant &block
     self.restore_status_after_block do
-      tenant_class.all.each do |tenant|
+      tenant_class.all.map do |tenant|
         RLS.set_tenant tenant
         yield tenant, block
       end
