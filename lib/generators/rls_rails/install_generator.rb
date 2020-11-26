@@ -15,9 +15,9 @@ module RlsRails
     def create_initializer
       initializer "rls_rails.rb", <<-RUBY
 RLS.configure do |config|
-  config.rls_rails.tenant_class = Tenant
-  config.rls_rails.tenant_fk = :tenant_id
-  config.rls_rails.policy_dir = 'db/policies'
+  config.tenant_class = Tenant
+  config.tenant_fk = :tenant_id
+  config.policy_dir = 'db/policies'
 end
       RUBY
     end
