@@ -41,7 +41,7 @@ module RLS
     clear_query_cache
     debug_print "Accessing database as #{tenant.name}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
-    @rls_status.merge!(tenant_id: tenant.id.to_s)
+    @rls_status.merge!(tenant_id: tenant.id.to_s, disabled: 'false')
   end
 
   def self.set_user user
