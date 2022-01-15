@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.name        = "rls_rails"
   spec.version     = RLS::VERSION
   spec.authors     = ["Stephan Biastoch"]
-  spec.email       = ["biastoch@suus.io"]
-  spec.homepage    = "https://www.suus.io"
+  spec.email       = ["stephan.biastoch@suus.de"]
+  spec.homepage    = "https://www.suus.de"
   spec.summary     = "PostgreSQL Row Level Security for Ruby on Rails"
   spec.description = ""
   spec.license     = "MIT"
