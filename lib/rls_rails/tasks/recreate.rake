@@ -11,8 +11,8 @@ namespace :db do
     def delete_all_policies
       q = "SELECT 'DROP POLICY ' || policyname  || ' ON ' || tablename || ';' FROM pg_policies WHERE schemaname='public';"
       ActiveRecord::Base.transaction do
-        drops = execute_q(q).values.flatten.join("\n")
-        execute_q drops
+        drops = execute_query(q).values.flatten.join("\n")
+        execute_query drops
       end
     end
 
@@ -21,15 +21,15 @@ namespace :db do
       folders = Dir.entries(path).select{|f| File.directory?(path+'/'+f) && f[0] != '.'}
       folders.each do |table|
         q = "ALTER TABLE #{table} ENABLE ROW LEVEL SECURITY, FORCE ROW LEVEL SECURITY;"
-        execute_q q
+        execute_query q
         version = last_version_of(table)
         load policy_path(table, version)
-        execute_q RLS.create_sql(table)
+        execute_query RLS.create_sql(table)
       end
     end
 
-    def execute_q q
-      ActiveRecord::Base.connection.execute_q q
+    def execute_query q
+      ActiveRecord::Base.connection.execute_query q
     end
   end
 end
