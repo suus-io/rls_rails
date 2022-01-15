@@ -1,42 +1,67 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
-
-name: Ruby
+name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: main
   pull_request:
-    branches: [ master ]
+    branches: main
 
 jobs:
-  test:
+  build:
+    name: Ruby ${{ matrix.ruby }}, Rails ${{ matrix.rails }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["2.7", "3.0", "3.1"]
+        rails: ["6.0", "6.1", "7.0"]
+        continue-on-error: [false]
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.6', '2.7', '3.0']
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "postgres"
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_VERSION: ${{ matrix.rails }}
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup PostgreSQL
-      uses: Harmon758/postgresql-action@v1.0.0
-      with:
-        # postgresql version: # default is latest
-        postgresql db: 'dummy_test'
-        postgresql user: 'dummy_development'
-    
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Prepare dummy app
-      run: bin/setup
-    - name: Run tests
-      run: bin/rspec
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
+
+      - name: Generate lockfile
+        run: bundle lock
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: bundle-${{ hashFiles('Gemfile.lock') }}
+
+      - name: Set up dummy app
+        run: bin/setup
+
+      - name: Run tests
+        run: bin/rspec
+        continue-on-error: ${{ matrix.continue-on-error }}
