@@ -102,6 +102,15 @@ RLS.policies_for :abbonements do
 end
 ```
 
+#### Shorthand to create a policy that admits rows that find a join partner in another table
+```ruby
+RLS.policies_for :group_memberships do
+  check_table :people, primary_key: :person_id, foreign_key: :id do
+    using "TRUE"
+  end
+end
+```
+
 ## Enabling and disabling RLS
 By default, the owner of a table is not affected by RLS. As migrations create tables, it will
 also be owner of the table, rendering RLS useless when not maintaining multiple 
