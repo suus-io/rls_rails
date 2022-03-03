@@ -19,6 +19,20 @@ module RLS
         ActiveRecord::Migration.include RLS::Statements
         #ActiveRecord::Migration::CommandRecorder.include Scenic::CommandRecorder
         #ActiveRecord::SchemaDumper.prepend Scenic::SchemaDumper
+
+        ActiveRecord::Base.connection.class.set_callback :checkout, :after do
+          # ensure the RLS-related session variables are reset when a
+          # thread checks out a connection
+          execute <<~SQL
+            RESET rls.user_id;
+            RESET rls.tenant_id;
+            RESET rls.disable;
+          SQL
+
+          clear_query_cache
+
+          RLS.thread_rls_status.merge!(tenant_id: '', user_id: '', disabled: '')
+        end
       end
     end
 

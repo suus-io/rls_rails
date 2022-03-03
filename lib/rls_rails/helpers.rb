@@ -4,14 +4,12 @@ module RLS
   # This variable is very problematic and not relieable, since in a
   # threaded environment of a connection pool this module is changed and
   # race conditions can occur, de-syncing the module-status with the true db status.
-  @rls_status = {user_id: '', tenant_id: '', disabled: ''}
-
   def self.disable!
     return if RLS.status[:disable] === 'true' # do not use disabled? here since it may be blank
 
     clear_query_cache
     execute_sql("SET SESSION rls.disable = TRUE;")
-    @rls_status.merge!(disabled: 'true')
+    thread_rls_status.merge!(disabled: 'true')
     debug_print "WARNING: ROW LEVEL SECURITY DISABLED!\n"
   end
 
@@ -27,7 +25,7 @@ module RLS
     clear_query_cache
     debug_print "ROW LEVEL SECURITY ENABLED!\n"
     execute_sql("SET SESSION rls.disable = FALSE;")
-    @rls_status.merge!(disabled: 'false')
+    thread_rls_status.merge!(disabled: 'false')
   end
 
   def self.enabled?
@@ -41,7 +39,7 @@ module RLS
     clear_query_cache
     debug_print "Accessing database as #{tenant.name}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
-    @rls_status.merge!(tenant_id: tenant.id.to_s)
+    thread_rls_status.merge!(tenant_id: tenant.id.to_s)
   end
 
   def self.set_user user
@@ -51,7 +49,7 @@ module RLS
     clear_query_cache
     debug_print "Accessing database as #{user.class}##{user.id}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
-    @rls_status.merge!(user_id: user.id.to_s)
+    thread_rls_status.merge!(user_id: user.id.to_s)
   end
 
   def self.current_tenant_id
@@ -71,7 +69,7 @@ module RLS
       RESET rls.disable;
     SQL
     clear_query_cache
-    @rls_status.merge!(tenant_id: '', user_id: '', disabled: '')
+    thread_rls_status.merge!(tenant_id: '', user_id: '', disabled: '')
   end
 
   # Sets the RLS status to the given value in one go.
@@ -89,7 +87,7 @@ module RLS
       SET SESSION rls.user_id   = '#{user_id}';
       SET SESSION rls.tenant_id = '#{tenant_id}';
     SQL
-    @rls_status.merge!(tenant_id: tenant_id, user_id: user_id, disabled: disable)
+    thread_rls_status.merge!(tenant_id: tenant_id, user_id: user_id, disabled: disable)
   end
 
   # @return [Hash] Values of the current RLS sesssion
@@ -170,5 +168,9 @@ module RLS
 
   def self.debug_print s
     print s if Railtie.config.rls_rails.verbose
+  end
+
+  def self.thread_rls_status
+    Thread.current["rls_status"] ||= { user_id: '', tenant_id: '', disabled: '' }
   end
 end
