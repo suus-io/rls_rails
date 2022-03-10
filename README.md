@@ -206,6 +206,13 @@ If you wondering if there are currently any tables without policies, you can che
 `SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND NOT rowsecurity`.
 
 
+## Database user/role permissions
+
+If the database user used for your application has either `SUPERUSER` or `BYPASSRLS`, then RLS policies will not be enforced. You can remove these attributes from your database user, but a caution that you may need to tweak other permissions so database migrations and other typical "superuser" tasks still work.
+
+Alternatively, you can set `config.unprivileged_db_role` to another database role that does not have these attributes.  Your primary database role will still be used for migrations, but as soon as a tenant is set, the role is switched for that session.  This also avoids the issue of a table owner bypassing RLS by default.
+
+
 ## Future Work
 
 ### Testing Policies

@@ -13,6 +13,7 @@ module RLS
     config.rls_rails.user_class = nil
     config.rls_rails.tenant_fk = :tenant_id
     config.rls_rails.verbose = false
+    config.rls_rails.unprivileged_db_role = nil
 
     initializer "rls_rails.load" do
       ActiveSupport.on_load :active_record do
