@@ -7,3 +7,4 @@ bundle check || bundle install
 
 bundle exec rake dummy:db:drop
 bundle exec rake dummy:db:create
+bundle exec rake db:test:prepare
