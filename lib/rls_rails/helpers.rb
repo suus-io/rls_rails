@@ -11,6 +11,7 @@ module RLS
 
     clear_query_cache
     execute_sql("SET SESSION rls.disable = TRUE;")
+    set_role(privileged: true)
     @rls_status.merge!(disabled: 'true')
     debug_print "WARNING: ROW LEVEL SECURITY DISABLED!\n"
   end
@@ -26,6 +27,7 @@ module RLS
 
     clear_query_cache
     debug_print "ROW LEVEL SECURITY ENABLED!\n"
+    set_role(privileged: false)
     execute_sql("SET SESSION rls.disable = FALSE;")
     @rls_status.merge!(disabled: 'false')
   end
@@ -41,6 +43,7 @@ module RLS
     clear_query_cache
     debug_print "Accessing database as #{tenant.try(:name) || "tenant id #{tenant.id}"}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = #{tenant.id};"
+    set_role(privileged: false)
     @rls_status.merge!(tenant_id: tenant.id.to_s)
   end
 
@@ -51,6 +54,7 @@ module RLS
     clear_query_cache
     debug_print "Accessing database as #{user.class}##{user.id}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.user_id = #{user.id};"
+    set_role(privileged: false)
     @rls_status.merge!(user_id: user.id.to_s)
   end
 
@@ -70,6 +74,7 @@ module RLS
       RESET rls.tenant_id;
       RESET rls.disable;
     SQL
+    set_role(privileged: false)
     clear_query_cache
     @rls_status.merge!(tenant_id: '', user_id: '', disabled: '')
   end
@@ -89,6 +94,7 @@ module RLS
       SET SESSION rls.user_id   = '#{user_id}';
       SET SESSION rls.tenant_id = '#{tenant_id}';
     SQL
+    set_role(privileged: status[:disable] && status[:disable] != 'false')
     @rls_status.merge!(tenant_id: tenant_id, user_id: user_id, disabled: disable)
   end
 
@@ -150,12 +156,26 @@ module RLS
     end
   end
 
+  def self.set_role(privileged: false)
+    return unless unprivileged_db_role.present?
+
+    if privileged
+      execute_sql('SET ROLE NONE;')
+    else
+      execute_sql("SET ROLE #{unprivileged_db_role};")
+    end
+  end
+
   def self.tenant_class
     Railtie.config.rls_rails.tenant_class
   end
 
   def self.user_class
     Railtie.config.rls_rails.user_class
+  end
+
+  def self.unprivileged_db_role
+    Railtie.config.rls_rails.unprivileged_db_role
   end
 
   private
