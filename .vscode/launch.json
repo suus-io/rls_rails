@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "ruby-debug",
+            "request": "launch",
+            "name": "Launch File",
+            "program": "${workspaceFolder}/bin/rspec",
+            "programArgs": [],
+            "useBundler": false
+        },{
+            "type": "ruby-debug",
+            "request": "launch",
+            "name": "RSpec (Active File)",
+            "program": "bin/rspec",
+            "programArgs": [
+                "-I",
+                "${workspaceFolder}",
+                "${file}"
+            ],
+            "useBundler": false
+        },
+        {
+            "name": "Run RSpec - all",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "bin/rspec",
+        },    
+    ]
+}

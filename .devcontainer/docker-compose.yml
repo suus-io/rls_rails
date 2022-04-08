@@ -5,8 +5,6 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-      args:
-        VARIANT: "3"
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
