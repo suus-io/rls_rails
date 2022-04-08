@@ -3,6 +3,11 @@ development: &default
   database: dummy_development
   encoding: unicode
   pool: 5
+  <% if ENV.fetch("GITHUB_ACTIONS", false) || ENV.fetch("CODESPACES", false) %>
+  host: localhost
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  <% end %>
 
 test:
   <<: *default

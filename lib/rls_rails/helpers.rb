@@ -39,7 +39,8 @@ module RLS
     return if self.status[:tenant_id] === tenant.id&.to_s && enabled?
 
     clear_query_cache
-    debug_print "Accessing database as #{tenant.name}\n"
+    
+    debug_print "Accessing database as #{tenant.try(:name) || "tenant id #{tenant.id}"}\n"
     execute_sql "SET SESSION rls.disable = FALSE; SET SESSION rls.tenant_id = '#{tenant.id}';"
     @rls_status.merge!(tenant_id: tenant.id.to_s)
   end
@@ -81,7 +82,7 @@ module RLS
     tenant_id = status[:tenant_id].to_s
     user_id = status[:user_id].to_s
     disable = status[:disable].nil? ? 'false' : status[:disable].to_s
-    return if self.status[:tenant_id] === tenant_id && self.status[:user_id] === user_id && self.status[:disabled] === disable
+    return if self.status[:tenant_id] === tenant_id && self.status[:user_id] === user_id && self.status[:disable] === disable
 
     clear_query_cache
     execute_sql <<-SQL.strip_heredoc

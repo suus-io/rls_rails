@@ -11,6 +11,15 @@ a multi-user application. A mistake in the rapidly changing application code
 may easily leak data or introduce severe security threads. With RLS PostgreSQL
 always double checks whether the data going in or out complies with the defined policies.
 
+## Compatibility
+This gem is tested with Ruby 2.7 and Ruby 3.0 against Rails 6.0, 6.1 and 7.0.
+
+
+Tests for Ruby 3.1 are not running due to a problem with psych 4.0 which is responsible for loading 
+the ruby-interpolated database.yaml configuration (details [here](https://bugs.ruby-lang.org/issues/17866)).
+This does not mean this Gem is not compatible with Ruby 3.1, it may be anyway, we haven't tried yet. PRs welcome ;-)
+
+
 ## Usage
 ### Migrations
 - `enable_rls(table, force: false)`: Enables RLS for `table`. Option `force` yields to application of RLS for the table owner himself as well.
