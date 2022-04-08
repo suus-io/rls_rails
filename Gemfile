@@ -12,5 +12,8 @@ gemspec
 # your gem to rubygems.org.
 
 # To use a debugger
-gem 'byebug', group: [:development, :test]
-gem 'readapt', group: :development
+group :development, :test do
+    gem 'byebug'
+    gem 'ruby-debug-ide'
+    gem 'debase'
+end
