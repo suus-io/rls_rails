@@ -70,6 +70,9 @@ GEM
     byebug (11.1.1)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
+    debase (0.2.4.1)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.15)
     diff-lcs (1.3)
     erubi (1.10.0)
     globalid (0.4.2)
@@ -137,6 +140,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    ruby-debug-ide (0.7.3)
+      rake (>= 0.8.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -158,9 +163,11 @@ PLATFORMS
 DEPENDENCIES
   activerecord (> 3)
   byebug
+  debase
   postgresql
   rls_rails!
   rspec
+  ruby-debug-ide
 
 BUNDLED WITH
    2.1.4
