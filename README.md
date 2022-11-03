@@ -11,6 +11,13 @@ a multi-user application. A mistake in the rapidly changing application code
 may easily leak data or introduce severe security threads. With RLS PostgreSQL
 always double checks whether the data going in or out complies with the defined policies.
 
+Note that some database roles bypass RLS however, eg. in order to take backups:
+
+> Superusers and roles with the BYPASSRLS attribute always bypass the row security system when accessing a table. Table owners normally bypass row security as well, though a table owner can choose to be subject to row security with ALTER TABLE ... FORCE ROW LEVEL SECURITY.
+
+(https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+
+
 ## Compatibility
 This gem is tested with Ruby 2.7 and Ruby 3.0 against Rails 6.0, 6.1 and 7.0.
 
