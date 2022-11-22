@@ -154,4 +154,32 @@ RSpec.describe RLS do
       end
     end
   end
+
+  describe '.current_tenant' do
+    before do
+      RLS.configure do |config|
+        config.tenant_class = Tenant
+      end
+    end
+    let!(:tenant) { Tenant.create! name: "Test Tenant" }
+
+    it 'returns the current tenant of the configured class' do
+      RLS.set_tenant tenant
+      expect(RLS.current_tenant).to eq tenant
+    end
+  end
+
+  describe '.current_user' do
+    before do
+      RLS.configure do |config|
+        config.user_class = User
+      end
+    end
+    let!(:user) { User.create! name: "Test User" }
+
+    it 'returns the current user of the configured class' do
+      RLS.set_user user
+      expect(RLS.current_user).to eq user
+    end
+  end
 end

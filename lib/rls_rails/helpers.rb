@@ -61,6 +61,12 @@ module RLS
     SQL
   end
 
+  def self.current_user_id
+    execute_sql(<<-SQL.strip_heredoc).values[0][0].presence
+      SELECT current_setting('rls.user_id', TRUE);
+    SQL
+  end
+
   # Resets all session variables set by this gem
   def self.reset!
     return if self.status[:tenant_id] === '' && self.status[:user_id] === '' && self.status[:disabled] === ''
