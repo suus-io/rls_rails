@@ -8,18 +8,25 @@ RSpec.describe RLS do
 
   describe '.set_tenant_for_block' do
     it 'works for threads' do
+      client = User.create name: 'A'
       RLS.enable!
+      RLS.set_tenant(client)
       expect(RLS.enabled?).to be_truthy
+      expect(RLS.current_tenant_id).to eq(client.id.to_s)
 
       Thread.new do
         RLS.disable!
+
         expect(RLS.disabled?).to be_truthy
+        expect(RLS.current_tenant).to be_nil
       end.run
 
       expect(RLS.enabled?).to be_truthy
+      expect(RLS.current_tenant_id).to eq(client.id.to_s)
 
       RLS.disable_for_block do
         expect(RLS.enabled?).to be_falsey
+        expect(RLS.current_tenant_id).to be_nil
       end
     end
 
@@ -96,11 +103,18 @@ RSpec.describe RLS do
     end
 
     context 'currently enabled' do
+      let!(:client1) {User.create name: 'User 1'}
+
       before { RLS.enable! }
 
       it 'clears not query cache' do
         User.count
         expect{ RLS.disable! }.to change { ActiveRecord::Base.connection.query_cache.size }.to 0
+      end
+
+      it 'unsets current_tenant_id' do
+        RLS.set_tenant(client1)
+        expect { RLS.disable! }.to change { RLS.current_tenant_id }.from(client1.id.to_s).to(nil)
       end
     end
   end
