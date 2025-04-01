@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     name: Ruby ${{ matrix.ruby }}, Rails ${{ matrix.rails }}
+    continue-on-error: ${{ matrix.continue-on-error }}
 
     strategy:
       fail-fast: false
@@ -40,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
@@ -54,7 +55,7 @@ jobs:
         run: bundle lock
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: bundle-${{ hashFiles('Gemfile.lock') }}
