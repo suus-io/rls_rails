@@ -14,6 +14,4 @@ gemspec
 # To use a debugger
 group :development, :test do
     gem 'byebug'
-    gem 'ruby-debug-ide'
-    gem 'debase'
 end
