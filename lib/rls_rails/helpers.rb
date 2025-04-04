@@ -56,12 +56,16 @@ module RLS
   end
 
   def self.current_tenant_id
+    return if disabled?
+
     execute_sql(<<-SQL.strip_heredoc).values[0][0].presence
       SELECT current_setting('rls.tenant_id', TRUE);
     SQL
   end
 
   def self.current_user_id
+    return if disabled?
+
     execute_sql(<<-SQL.strip_heredoc).values[0][0].presence
       SELECT current_setting('rls.user_id', TRUE);
     SQL
